@@ -34,7 +34,7 @@ player_vars = []
 def record_attendance():
     try:
         # Specify the path to the original Excel file
-        excel_file = "path_to_your_existing_excel_file.xlsx"
+        excel_file = "F:\OneDrive\TubiStats\AttendanceTest.xlsx"
 
         # Load the existing workbook
         workbook = load_workbook(excel_file)
