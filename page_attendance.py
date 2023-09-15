@@ -2,35 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from openpyxl import load_workbook
+import player_data  # Import the player data module
 
-# Define a dictionary to map player names to player IDs
-player_id_dict = {
-    "Baran": "1",
-    "Cem": "2",
-    "Emir": "3",
-    "Ersan": "4",
-    "Ivo": "5",
-    "Jochem": "6",
-    "Jordy": "7",
-    "Justin": "8",
-    "Kaan": "9",
-    "Kevin": "10",
-    "Koray": "11",
-    "Lars": "12",
-    "Luc": "13",
-    "Oseb": "14",
-    "Rick": "15",
-    "Stefan": "16",
-    "Sven": "17",
-    "Swen": "18"
-}
-
-# List of player names
-players = list(player_id_dict.keys())
-
-player_vars = []
-
-# Function to record attendance
 def record_attendance():
     try:
         # Specify the path to the original Excel file
@@ -50,7 +23,7 @@ def record_attendance():
             training_id = last_training_id + 1
 
         # Get the selected players (those present) and their IDs
-        present_players = [int(player_id_dict[players[i]]) for i, var in enumerate(player_vars) if var.get()]
+        present_players = [int(player_data.player_id_dict[player]) for player in player_data.players if player_vars[player_data.players.index(player)].get()]
 
         # Calculate the starting index based on existing data
         existing_data = [cell.value for cell in sheet["A"]]
@@ -75,23 +48,33 @@ def record_attendance():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-# Create the main application window
-root = tk.Tk()
-root.title("Training Attendance Form")
+def create_page(notebook):
+    attendance_frame = ttk.Frame(notebook)
+    notebook.add(attendance_frame, text="Attendance")
 
-# Set the window size to 400x500 pixels
-root.geometry("400x500")
+    global player_vars
+    player_vars = []
 
-# Checkboxes for selecting players (18 players)
-for player in players:
-    var = tk.BooleanVar()
-    player_vars.append(var)
-    checkbox = ttk.Checkbutton(root, text=player, variable=var)
-    checkbox.pack()
+    # Create labels and input fields for goal recording
+    bold_font = ("", 10, "bold")  # Define a bold font
 
-# Button to record attendance
-record_button = ttk.Button(root, text="Record Attendance", command=record_attendance)
-record_button.pack()
+    # Create checkboxes and labels for player selection (centered)
+    for player in player_data.players:
+        var = tk.BooleanVar()
+        player_vars.append(var)
 
-# Start the GUI application
-root.mainloop()
+        frame = ttk.Frame(attendance_frame)
+        frame.pack(fill=tk.X, padx=10, pady=5)
+
+        label = ttk.Label(frame, text=player, font=bold_font)
+        label.pack(side=tk.LEFT)
+
+        checkbox = ttk.Checkbutton(frame, variable=var)
+        checkbox.pack(side=tk.RIGHT)
+
+    # Button to record attendance - Attendance Page
+    record_button = ttk.Button(attendance_frame, text="Record Attendance", command=record_attendance)
+    record_button.pack(pady=10)
+
+    # Center the button within the frame
+    attendance_frame.columnconfigure(0, weight=1)
