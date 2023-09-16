@@ -2,16 +2,16 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from openpyxl import load_workbook
-import player_data  # Import the player data module
+import players  # Import the player data module
 
-# Function to record penalties
-def record_penalties():
+# Function to record yellows
+def record_yellows():
     try:
-        # Specify the path to the original Excel file for penalties
-        penalties_excel_file = "F:\OneDrive\TubiStats\PenaltiesTest.xlsx"
+        # Specify the path to the original Excel file for yellows
+        yellows_excel_file = "F:\OneDrive\TubiStats\Yellows.xlsx"
 
         # Load the existing workbook
-        workbook = load_workbook(penalties_excel_file)
+        workbook = load_workbook(yellows_excel_file)
 
         # Get the active sheet (you can modify this to select a specific sheet)
         sheet = workbook.active
@@ -24,7 +24,7 @@ def record_penalties():
             match_id = last_match_id + 1
 
         # Get the selected players (those with checkboxes)
-        selected_players = [player_data.players[i] for i, var in enumerate(player_vars) if var.get()]
+        selected_players = [players.players[i] for i, var in enumerate(player_vars) if var.get()]
 
         # Calculate the starting index based on existing data
         existing_data = [cell.value for cell in sheet["A"]]
@@ -35,24 +35,24 @@ def record_penalties():
 
         # Append each selected player as a separate row with the specified index and the determined match ID
         for i, player in enumerate(selected_players, start=start_index):
-            player_id = int(player_data.player_id_dict[player])
+            player_id = int(players.player_id_dict[player])
             sheet.append([i, player_id, match_id])
 
         # Save the Excel file with the updated data
-        workbook.save(penalties_excel_file)
+        workbook.save(yellows_excel_file)
 
         # Reset the form (clear the checkboxes)
         for var in player_vars:
             var.set(False)
 
         # Show a success message
-        messagebox.showinfo("Success", "Penalties recorded successfully!")
+        messagebox.showinfo("Success", "Yellows recorded successfully!")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
 def create_page(notebook):
-    penalties_frame = ttk.Frame(notebook)
-    notebook.add(penalties_frame, text="Penalties")
+    yellows_frame = ttk.Frame(notebook)
+    notebook.add(yellows_frame, text="Yellow Card")
 
     global player_vars
     player_vars = []
@@ -61,20 +61,20 @@ def create_page(notebook):
     bold_font = ("", 10, "bold")  # Define a bold font
 
     # Create checkboxes for player selection (centered)
-    for player in player_data.players:
+    for player in players.players:
         var = tk.BooleanVar()
         player_vars.append(var)
 
-        label = ttk.Label(penalties_frame, text=player, font=bold_font)
-        label.grid(row=player_data.players.index(player), column=0, padx=10, pady=5, sticky=tk.W)
+        label = ttk.Label(yellows_frame, text=player, font=bold_font)
+        label.grid(row=players.players.index(player), column=0, padx=10, pady=5, sticky=tk.W)
 
-        checkbox = ttk.Checkbutton(penalties_frame, variable=var)
-        checkbox.grid(row=player_data.players.index(player), column=1, padx=10, pady=5, sticky=tk.E)
+        checkbox = ttk.Checkbutton(yellows_frame, variable=var)
+        checkbox.grid(row=players.players.index(player), column=1, padx=10, pady=5, sticky=tk.E)
 
-    # Button to record penalties - Penalties Page
-    penalties_button = ttk.Button(penalties_frame, text="Record Penalties", command=record_penalties)
-    penalties_button.grid(row=len(player_data.players), columnspan=2, padx=10, pady=10)
-    penalties_button.configure(width=20)  # Adjust the button width for better appearance
+    # Button to record yellows - Yellows Page
+    yellows_button = ttk.Button(yellows_frame, text="Confirm", command=record_yellows)
+    yellows_button.grid(row=len(players.players), columnspan=2, padx=10, pady=10)
+    yellows_button.configure(width=20)  # Adjust the button width for better appearance
 
     # Center the button within the frame
-    penalties_frame.columnconfigure(0, weight=1)
+    yellows_frame.columnconfigure(0, weight=1)

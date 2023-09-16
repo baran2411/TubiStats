@@ -1,26 +1,26 @@
 import tkinter as tk
 from tkinter import ttk
-import page_attendance
-import page_goals
-import page_assists
-import page_minutes
-import page_yellows
-import page_penalties
+from pages import training_attendance
+from pages import goal
+from pages import assist
+from pages import minutes
+from pages import yellow_card
+from pages import penalty
 
 def main():
     root = tk.Tk()
-    root.title("Player Statistics Tracker")
-    root.geometry("375x650")
+    root.title("Tubi Statsheet")
+    root.geometry("375x635")
 
     notebook = ttk.Notebook(root)
     notebook.pack(fill=tk.BOTH, expand=True)
 
-    page_attendance.create_page(notebook)
-    page_goals.create_page(notebook)
-    page_assists.create_page(notebook)
-    page_minutes.create_page(notebook)
-    page_yellows.create_page(notebook)
-    page_penalties.create_page(notebook)
+    training_attendance.create_page(notebook)
+    goal.create_page(notebook)
+    assist.create_page(notebook)
+    minutes.create_page(notebook)
+    yellow_card.create_page(notebook)
+    penalty.create_page(notebook)
 
     root.mainloop()
 

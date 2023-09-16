@@ -2,13 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from openpyxl import load_workbook
-import player_data  # Import the player data module
+import players  # Import the player data module
 
 # Function to record minutes
 def record_minutes():
     try:
         # Specify the path to the original Excel file for minutes
-        minutes_excel_file = "F:\OneDrive\TubiStats\MinutesTest.xlsx"
+        minutes_excel_file = "F:\OneDrive\TubiStats\Minute.xlsx"
 
         # Load the existing workbook
         workbook = load_workbook(minutes_excel_file)
@@ -25,10 +25,10 @@ def record_minutes():
 
         # Get the player names and the corresponding minutes
         minutes_data = []
-        for i, player in enumerate(player_data.players):
+        for i, player in enumerate(players.players):
             minutes = minutes_vars[i].get()
             if minutes:
-                player_id = int(player_data.player_id_dict[player])  # Wrap in int() to ensure it's an integer
+                player_id = int(players.player_id_dict[player])  # Wrap in int() to ensure it's an integer
                 minutes = int(minutes)  # Wrap in int() to ensure it's an integer
                 minutes_data.append([match_id, player_id, minutes])
 
@@ -66,19 +66,19 @@ def create_page(notebook):
     bold_font = ("", 10, "bold")  # Define a bold font
 
     # Create labels and input fields for minute recording
-    for player in player_data.players:
+    for player in players.players:
         label = ttk.Label(minutes_frame, text=player, font=bold_font)
-        label.grid(column=0, row=player_data.players.index(player), padx=10, pady=5, sticky=tk.W)
+        label.grid(column=0, row=players.players.index(player), padx=10, pady=5, sticky=tk.W)
 
         var = tk.StringVar()
         minutes_vars.append(var)
 
         minutes_entry = ttk.Entry(minutes_frame, textvariable=var)
-        minutes_entry.grid(column=1, row=player_data.players.index(player), padx=10, pady=5, sticky=tk.E)
+        minutes_entry.grid(column=1, row=players.players.index(player), padx=10, pady=5, sticky=tk.E)
 
     # Button to record minutes - Minutes Page
-    minutes_button = ttk.Button(minutes_frame, text="Record Minutes", command=record_minutes)
-    minutes_button.grid(column=0, row=len(player_data.players), columnspan=2, padx=10, pady=10)
+    minutes_button = ttk.Button(minutes_frame, text="Confirm", command=record_minutes)
+    minutes_button.grid(column=0, row=len(players.players), columnspan=2, padx=10, pady=10)
     minutes_button.configure(width=20)  # Adjust the button width for better appearance
 
     # Center the button within the frame

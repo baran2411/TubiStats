@@ -2,13 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from openpyxl import load_workbook
-import player_data  # Import the player data module
+import players  # Import the player data module
 
 # Function to record goals
 def record_goals():
     try:
         # Specify the path to the original Excel file for goals
-        goals_excel_file = "F:\OneDrive\TubiStats\GoalsTest.xlsx"
+        goals_excel_file = "F:\OneDrive\TubiStats\Goal.xlsx"
 
         # Load the existing workbook
         workbook = load_workbook(goals_excel_file)
@@ -25,10 +25,10 @@ def record_goals():
 
         # Get the player names and the corresponding goal amounts
         goal_data = []
-        for i, player in enumerate(player_data.players):
+        for i, player in enumerate(players.players):
             goal_amount = goal_vars[i].get()
             if goal_amount:
-                player_id = int(player_data.player_id_dict[player])  # Wrap in int() to ensure it's an integer
+                player_id = int(players.player_id_dict[player])  # Wrap in int() to ensure it's an integer
                 goal_amount = int(goal_amount)  # Wrap in int() to ensure it's an integer
                 goal_data.append([match_id, player_id, goal_amount])
 
@@ -57,7 +57,7 @@ def record_goals():
 
 def create_page(notebook):
     goals_frame = ttk.Frame(notebook)
-    notebook.add(goals_frame, text="Goals")
+    notebook.add(goals_frame, text="Goal")
 
     global goal_vars
     goal_vars = []
@@ -66,18 +66,18 @@ def create_page(notebook):
     bold_font = ("", 10, "bold")  # Define a bold font
 
     # Create labels and input fields for goal recording
-    for player in player_data.players:
+    for player in players.players:
         label = ttk.Label(goals_frame, text=player, font=bold_font)
-        label.grid(column=0, row=player_data.players.index(player), padx=10, pady=5, sticky=tk.W)
+        label.grid(column=0, row=players.players.index(player), padx=10, pady=5, sticky=tk.W)
 
         var = tk.StringVar()
         goal_vars.append(var)
 
         goal_entry = ttk.Entry(goals_frame, textvariable=var)
-        goal_entry.grid(column=1, row=player_data.players.index(player), padx=10, pady=5, sticky=tk.E)
+        goal_entry.grid(column=1, row=players.players.index(player), padx=10, pady=5, sticky=tk.E)
 
     # Button to record goals - Goals Page
-    goals_button = ttk.Button(goals_frame, text="Record Goals", command=record_goals)
-    goals_button.grid(column=0, row=len(player_data.players), columnspan=2, padx=10, pady=10)
+    goals_button = ttk.Button(goals_frame, text="Confirm", command=record_goals)
+    goals_button.grid(column=0, row=len(players.players), columnspan=2, padx=10, pady=10)
     goals_button.configure(width=20)  # Adjust the button width for better appearance
     goals_frame.columnconfigure(0, weight=1)  # Center the button within the frame

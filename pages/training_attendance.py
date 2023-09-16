@@ -2,12 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from openpyxl import load_workbook
-import player_data  # Import the player data module
+import players  # Import the player data module
 
 def record_attendance():
     try:
         # Specify the path to the original Excel file
-        excel_file = "F:\OneDrive\TubiStats\AttendanceTest.xlsx"
+        excel_file = "F:\OneDrive\TubiStats\TrainingAanwezigheid.xlsx"
 
         # Load the existing workbook
         workbook = load_workbook(excel_file)
@@ -23,7 +23,7 @@ def record_attendance():
             training_id = last_training_id + 1
 
         # Get the selected players (those present) and their IDs
-        present_players = [int(player_data.player_id_dict[player]) for player in player_data.players if player_vars[player_data.players.index(player)].get()]
+        present_players = [int(players.player_id_dict[player]) for player in players.players if player_vars[players.players.index(player)].get()]
 
         # Calculate the starting index based on existing data
         existing_data = [cell.value for cell in sheet["A"]]
@@ -59,7 +59,7 @@ def create_page(notebook):
     bold_font = ("", 10, "bold")  # Define a bold font
 
     # Create checkboxes and labels for player selection (centered)
-    for player in player_data.players:
+    for player in players.players:
         var = tk.BooleanVar()
         player_vars.append(var)
 
@@ -73,7 +73,7 @@ def create_page(notebook):
         checkbox.pack(side=tk.RIGHT)
 
     # Button to record attendance - Attendance Page
-    record_button = ttk.Button(attendance_frame, text="Record Attendance", command=record_attendance)
+    record_button = ttk.Button(attendance_frame, text="Confirm", command=record_attendance)
     record_button.pack(pady=10)
 
     # Center the button within the frame
