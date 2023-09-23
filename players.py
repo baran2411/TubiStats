@@ -6,7 +6,6 @@ player_id_dict = {
     "Ersan": "4",
     "Ivo": "5",
     "Jochem": "6",
-    "Jordy": "7",
     "Justin": "8",
     "Kaan": "9",
     "Kevin": "10",
@@ -17,7 +16,9 @@ player_id_dict = {
     "Rick": "15",
     "Stefan": "16",
     "Sven": "17",
-    "Swen": "18"
+    "Swen": "18",
+    "Leenspeler": "19",
+    "Noah": "20"
 }
 
 # List of player names

@@ -10,7 +10,7 @@ from pages import penalty
 def main():
     root = tk.Tk()
     root.title("Tubi Statsheet")
-    root.geometry("375x635")
+    root.geometry("375x660")
 
     notebook = ttk.Notebook(root)
     notebook.pack(fill=tk.BOTH, expand=True)
