@@ -16,9 +16,9 @@ def main():
     notebook.pack(fill=tk.BOTH, expand=True)
 
     training_attendance.create_page(notebook)
+    minutes.create_page(notebook)
     goal.create_page(notebook)
     assist.create_page(notebook)
-    minutes.create_page(notebook)
     yellow_card.create_page(notebook)
     penalty.create_page(notebook)
 

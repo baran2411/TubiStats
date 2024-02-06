@@ -10,15 +10,13 @@ player_id_dict = {
     "Kaan": "9",
     "Kevin": "10",
     "Koray": "11",
-    "Lars": "12",
     "Luc": "13",
+    "Noah": "20",
     "Oseb": "14",
     "Rick": "15",
     "Stefan": "16",
     "Sven": "17",
-    "Swen": "18",
-    "Leenspeler": "19",
-    "Noah": "20"
+    "Leenspeler": "19"
 }
 
 # List of player names
