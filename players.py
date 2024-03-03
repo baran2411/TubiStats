@@ -15,6 +15,7 @@ player_id_dict = {
     "Oseb": "14",
     "Rick": "15",
     "Stefan": "16",
+    "Sten": "31",
     "Sven": "17",
     "Leenspeler": "19"
 }
